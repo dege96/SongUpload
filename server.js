@@ -12,17 +12,43 @@ const SONGS_DIR = path.join(__dirname, 'Songs');
 // Store the list of songs
 let songsList = [];
 
+// Rekursiv funktion för att hämta filer i submappar
+function getAllSongsInDirectory(dir, subPath = '') {
+  try {
+    const items = fs.readdirSync(dir, { withFileTypes: true });
+    let songs = [];
+
+    for (const item of items) {
+      const fullPath = path.join(dir, item.name);
+      const relativePath = path.join(subPath, item.name);
+
+      if (item.isDirectory()) {
+        // Rekursivt söker i submappen
+        const subDirSongs = getAllSongsInDirectory(fullPath, relativePath);
+        songs = songs.concat(subDirSongs);
+      } else if (item.isFile() && (item.name.endsWith('.mp3') || item.name.endsWith('.wav'))) {
+        // Lägger till musikfiler
+        songs.push({
+          name: item.name,
+          folder: subPath || 'Root',
+          path: `/songs/${encodeURIComponent(relativePath)}`,
+          fullPath: fullPath,
+          displayPath: subPath ? `${subPath}/${item.name}` : item.name
+        });
+      }
+    }
+
+    return songs;
+  } catch (error) {
+    console.error(`Error reading directory ${dir}:`, error);
+    return [];
+  }
+}
+
 // Function to update the songs list
 function updateSongsList() {
   try {
-    const files = fs.readdirSync(SONGS_DIR);
-    songsList = files
-      .filter(file => file.endsWith('.mp3'))
-      .map(file => ({
-        name: file,
-        path: `/songs/${encodeURIComponent(file)}`,
-        fullPath: path.join(SONGS_DIR, file)
-      }));
+    songsList = getAllSongsInDirectory(SONGS_DIR);
     console.log('Songs list updated:', songsList.length, 'songs found');
   } catch (error) {
     console.error('Error updating songs list:', error);
@@ -32,10 +58,11 @@ function updateSongsList() {
 // Initial song list update
 updateSongsList();
 
-// Watch for changes in the Songs directory
+// Watch for changes in the Songs directory and all subdirectories
 const watcher = chokidar.watch(SONGS_DIR, {
   persistent: true,
-  ignoreInitial: true
+  ignoreInitial: true,
+  recursive: true
 });
 
 watcher
@@ -45,6 +72,14 @@ watcher
   })
   .on('unlink', path => {
     console.log(`File ${path} has been removed`);
+    updateSongsList();
+  })
+  .on('addDir', path => {
+    console.log(`Directory ${path} has been added`);
+    updateSongsList();
+  })
+  .on('unlinkDir', path => {
+    console.log(`Directory ${path} has been removed`);
     updateSongsList();
   });
 

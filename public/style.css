@@ -106,6 +106,50 @@ button:hover {
     list-style-type: none;
 }
 
+/* Folder styling */
+.folder-header {
+    padding: 10px;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #34495e;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.folder-header:hover {
+    background-color: #d6dbdf;
+}
+
+.folder-header i {
+    margin-right: 8px;
+    color: #f39c12;
+}
+
+.expand-icon {
+    margin-right: 8px;
+    font-size: 12px;
+    transition: transform 0.2s;
+}
+
+.folder-name {
+    flex-grow: 1;
+}
+
+.folder-songs {
+    transition: max-height 0.3s ease-out;
+}
+
+.subfolder-item {
+    padding-left: 25px;
+    background-color: #f9f9f9;
+}
+
+/* Playlist items */
 .playlist-item {
     padding: 12px 10px;
     border-bottom: 1px solid #eee;
@@ -134,26 +178,26 @@ button:hover {
     border-bottom: none;
 }
 
-/* Rating och kommentarer */
+/* Favorit och kommentarer */
 .song-actions {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.rating {
-    display: flex;
-    gap: 3px;
-}
-
-.star {
+.favorite-star {
     color: #ccc;
     cursor: pointer;
-    font-size: 18px;
-    transition: color 0.2s;
+    font-size: 22px;
+    transition: color 0.2s, transform 0.2s;
 }
 
-.star:hover, .star.active {
+.favorite-star:hover {
+    color: #f1c40f;
+    transform: scale(1.2);
+}
+
+.favorite-star.active {
     color: #f1c40f;
 }
 
