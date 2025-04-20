@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Min Musikspelare</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -26,12 +27,20 @@
         <div class="playlist-container">
             <div class="playlist-header">
                 <h2>Spellista</h2>
-                <div class="playlist-actions">
-                    <button id="refresh-button">Uppdatera</button>
-                    <span id="last-updated">Senast uppdaterad: Aldrig</span>
-                </div>
             </div>
             <ul id="playlist"></ul>
+        </div>
+    </div>
+    
+    <!-- Modal för kommentarer -->
+    <div id="comment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="comment-song-title">Kommentarer för låt</h3>
+            <div class="comment-form">
+                <textarea id="comment-text" placeholder="Skriv din kommentar här..."></textarea>
+                <button id="save-comment">Spara kommentar</button>
+            </div>
         </div>
     </div>
     
