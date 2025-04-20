@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Min Musikspelare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Min Musikspelare</h1>
+        
+        <div class="music-player">
+            <div class="now-playing">
+                <div id="current-song-info">Ingen låt spelar</div>
+            </div>
+            
+            <audio id="audio-player" controls></audio>
+            
+            <div class="controls">
+                <button id="prev-button">Föregående</button>
+                <button id="next-button">Nästa</button>
+            </div>
+        </div>
+        
+        <div class="playlist-container">
+            <div class="playlist-header">
+                <h2>Spellista</h2>
+                <div class="playlist-actions">
+                    <button id="refresh-button">Uppdatera</button>
+                    <span id="last-updated">Senast uppdaterad: Aldrig</span>
+                </div>
+            </div>
+            <ul id="playlist"></ul>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
